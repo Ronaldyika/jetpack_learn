@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,19 +31,58 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.android_learn.Domain.model.Session
 import com.example.android_learn.Domain.model.Subject
+import com.example.android_learn.Domain.model.Task
 import com.example.android_learn.R
 import com.example.android_learn.presentation.components.CountCard
+import com.example.android_learn.presentation.components.StudySessionList
 import com.example.android_learn.presentation.components.SubjectCard
+import com.example.android_learn.presentation.components.tasksList
 
 @Composable
 fun DashboardScreen(modifier: Modifier = Modifier) {
 
     val subjects = listOf(
-        Subject("History",10f, Subject.subjectCardColors[0] ),
-        Subject("geology",10f, Subject.subjectCardColors[0] ),
-        Subject("maths",10f, Subject.subjectCardColors[0] ),
-        Subject("physics",10f, Subject.subjectCardColors[0] ),
+        Subject("History",10f, Subject.subjectCardColors[0] ,2),
+        Subject("geology",10f, Subject.subjectCardColors[0],1 ),
+        Subject("maths",10f, Subject.subjectCardColors[0] ,2),
+        Subject("physics",10f, Subject.subjectCardColors[0],1 ),
+
+    )
+
+    val tasks = listOf(
+        Task(
+            "Do Homework",
+            "",
+            dueDate = 0L,
+            proirity = 1,
+            relatedToSubject = "",
+            isComplete = false,0,1
+        ),
+        Task(
+            "Do Running",
+            "",
+            dueDate = 6L,
+            proirity = 3,
+            relatedToSubject = "",
+            isComplete = true,1,2
+        ),        Task(
+            "Jogging",
+            "",
+            dueDate = 3L,
+            proirity = 2,
+            relatedToSubject = "",
+            isComplete = true,2,1
+        ),
+
+    )
+
+    val sessions = listOf(
+        Session(1,"English",8L,0L,2),
+        Session(2,"French",8L,0L,2),
+        Session(3,"Maths",8L,0L,2),
+        Session(4,"Geology",8L,0L,2),
 
     )
 
@@ -64,8 +104,34 @@ fun DashboardScreen(modifier: Modifier = Modifier) {
             }
             item {
                 SubjectCardSction(modifier = modifier.fillMaxWidth()
-                    , subjectList = subjects)
+                    , subjectList = subjects
+                )
             }
+            item{
+                Button(onClick = {}
+                ,modifier.fillMaxWidth()
+                        .padding(horizontal = 48.dp, vertical = 20.dp)) {
+                    Text(text = "start a study session")
+                }
+            }
+            tasksList(
+                sectionTitle = "Upcoming Task",
+                emptylistText = "you dont have any upcoming tasks. \n click to add the tasks",
+                task = tasks,
+                onCheckBoxClick = {},
+                onTaskCardClick = {}
+            )
+            item {
+                Spacer(modifier.height(20.dp))
+            }
+
+            StudySessionList(
+                sectionTitle = "Recent Study Sessions",
+                emptylistText = "you do not have any study sessions. \n " +
+                        "start a study session to begin recording progress",
+                session = sessions,
+                onDeleteIconCLick = {}
+            )
 
         }
 
@@ -152,3 +218,4 @@ private fun SubjectCardSction(modifier: Modifier = Modifier,
     }
 
 }
+
